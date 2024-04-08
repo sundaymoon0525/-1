@@ -1,0 +1,7 @@
+def final(Data):
+    Data.sort(key = lambda x: int(x[1]))
+    Data = list(reversed(sorted(Data, key = lambda x: int(x[0]))))
+    for i in Data:
+        if i[1] == 14:
+           i[1] = 1
+    return Data
