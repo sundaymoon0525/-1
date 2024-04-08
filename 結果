@@ -1,0 +1,12 @@
+cards = Card()
+pn, name = IN()
+hands = separate_sort(cards) # [[['a', '4'],..., ['d', '3']], [['b', '13'], ..., ['b', '10']]]
+Data = [] #[加權, face, '牌型', name, 'a1 a2']
+for i in hands: 
+    Data.append(card_type(i))
+for i, j in enumerate(hands):
+    Data[i].append(name[i]) #'name'
+    Data[i].append(' '.join(''.join(k) for k in j)) #'a1 a2'
+Data = final(Data)
+for i in range(pn):
+    print(f'第{i+1}名: {Data[i][3]} {Data[i][4]} {Data[i][2]} {Data[i][1]}')
