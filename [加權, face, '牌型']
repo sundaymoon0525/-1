@@ -1,0 +1,68 @@
+def card_type(hand): # IN: [['a', '4'],..., ['d', '3']] # OUT: [加權, face, '桐花順']
+    color = ',' + ','.join(list(map(lambda x: str(x[0]), hand))) + ',' # ',a,b,c,a,d,'
+    number = ',' + ','.join(list(map(lambda x: str(x[1]), hand))) + ',' # ',4,4,4,5,3,'
+
+    flush = 0; straight = 0
+    four = 0; three = 0; two = 0
+
+    Max = []; face = 0
+
+    a = ['a', 'b', 'c', 'd']
+    #-------------------------------------- 1
+    for i in a: #flush
+        if f',{i},{i},{i},{i},{i},' == color:
+            flush = 1
+            for j in number.split(','):
+                if j.isdecimal():
+                    Max.append(int(i))
+            break
+    for i in range(1, 14): #straight
+        if f',{i},{i+1},{i+2},{i+3},{i+4},' == number:
+            straight = 1
+            Max.append(i+4)
+            break
+    for i in range(1, 14): #four three two
+        if f',{i},{i},{i},{i},' in number:
+            four = 1
+            Max.append(i)  
+            break
+        elif f',{i},{i},{i},' in number:
+            three = 1
+            Max.append(i)
+        elif f',{i},{i},' in number:
+            two += 1
+            Max.append(i)
+    if not Max:
+        for j in number.split(','):
+            if j.isdecimal():
+                Max.append(int(j))
+
+    #-------------------------------------- 2
+    # for i, j in enumerate(max):
+    #     if j == 1:
+    #         max[i] = 14
+    # face = max(Max)
+    for i in range(len(Max)):
+        if Max[i] == 1:
+            Max[i] = 14
+    face = max(Max)      
+
+    #-------------------------------------- 3 [加權, face, '牌型']
+    if straight == 1 and flush == 1:
+        return [8, face, '桐花順']
+    elif four == 1:
+        return [7, face, '鐵']
+    elif three == 1 and two == 1:
+        return [6, face, '葫蘆']
+    elif flush == 1:
+        return [5, face, '桐花']
+    elif straight == 1:
+        return [4, face, '順子']
+    elif three == 1:
+        return [3, face, '三條']
+    elif two == 2:
+        return [2, face, '兩對']
+    elif two == 1:
+        return [1, face, '一對']
+    else:
+        return [0, face, '雜牌']
