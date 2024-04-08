@@ -1,0 +1,11 @@
+def IN(): 
+    pn = 0; name = []
+    while True:
+        pn = int(input('請輸入p2~p5: '))
+        if pn > 5 or pn < 2:
+            continue
+        else:
+            break
+    for i in range(pn):
+        name.append(input(f'第{i+1}號玩家名稱: '))
+    return pn, name
