@@ -1,0 +1,9 @@
+def numpy_unique(list_1):
+    list_2 = []
+    for i in list_1:
+        if i not in list_2:
+            list_2 += [i]
+    list_2.sort(key = lambda x: int(x))
+    return list_2
+a = [4, 3, 3, 6, 7, 3, 1, 5, 1, 2]
+print(numpy_unique(a))
